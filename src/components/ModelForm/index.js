@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Forms, ButtonSubmit } from './style';
 
 export default function ModelForm({ children, signUp }) {
   function bla() {
@@ -8,12 +9,10 @@ export default function ModelForm({ children, signUp }) {
     return false;
   }
   return (
-    <>
-      <form onSubmit={() => (signUp ? bla() : ble())}>
-        {children}
-      </form>
-      <input type="submit" value={signUp ? 'Cadastrar' : 'Entrar'} />
-    </>
+    <Forms onSubmit={() => (signUp ? bla() : ble())}>
+      {children}
+      <ButtonSubmit value={signUp ? 'Cadastrar' : 'Entrar'} />
+    </Forms>
   );
 }
 

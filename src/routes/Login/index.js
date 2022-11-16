@@ -9,18 +9,14 @@ export default function Login() {
     <>
       <Title>MyWallet</Title>
       <ModelForm signUp={false}>
+
         <Label label="id-email">
-          <Input
-            text="E-mail"
-            id="id-email"
-          />
+          <Input text="E-mail" id="id-email" />
         </Label>
         <Label label="id-password">
-          <Input
-            text="Senha"
-            id="id-password"
-          />
+          <Input text="Senha" id="id-password" />
         </Label>
+
       </ModelForm>
       <Link
         style={{ textDecoration: 'none' }}

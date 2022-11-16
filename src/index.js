@@ -10,6 +10,7 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import Root from './routes/Root';
+import Transaction from './routes/Transaction';
 
 const router = createBrowserRouter([
   {
@@ -32,9 +33,13 @@ const router = createBrowserRouter([
         element: <Home />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: '/transaction',
+        element: <Transaction />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
-
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

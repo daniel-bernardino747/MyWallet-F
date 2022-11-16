@@ -7,6 +7,7 @@ import {
 import ErrorPage from './error-page';
 import reportWebVitals from './reportWebVitals';
 import Login from './routes/Login';
+import Register from './routes/Register';
 import Root from './routes/Root';
 
 const router = createBrowserRouter([
@@ -16,13 +17,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        index: true,
         element: <Login />,
         errorElement: <ErrorPage />,
-        index: true,
       },
       {
         path: '/sign-up',
-        element: <Login />,
+        element: <Register />,
         errorElement: <ErrorPage />,
       },
     ],

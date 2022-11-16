@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import ModelForm from '../../components/ModelForm';
 import {
   Title, Input, Label, SignUp,
-} from './style';
+} from '../../components/ModelForm/style';
 
 export default function Login() {
   return (

@@ -5,7 +5,7 @@ import {
   Forms, ButtonSubmit, Label, Input,
 } from './style';
 import { AuthContext } from '../../contexts/authContext';
-import { registerUser } from '../../helpers/authHelpers';
+import { registerUser, loginUser } from '../../helpers/authHelpers';
 
 export default function ModelForm({ signUp, login }) {
   const { auth, setAuth } = useContext(AuthContext);
@@ -17,18 +17,24 @@ export default function ModelForm({ signUp, login }) {
 
   async function toRegister(e) {
     e.preventDefault();
-    registerUser(auth).then((token) => {
+    await registerUser(auth).then(() => {
       setAuth({
-        token, name: '', email: '', password: '', repeatPassword: '',
+        name: '', email: '', password: '', repeatPassword: '',
       });
     });
     navigate('/');
   }
-  function ble() {
-    return false;
+  function toLogin(e) {
+    e.preventDefault();
+    loginUser(auth).then((token) => {
+      setAuth({
+        token, name: '', email: '', password: '', repeatPassword: '',
+      });
+      navigate('/home');
+    });
   }
   return (
-    <Forms onSubmit={(e) => (typeForm ? toRegister(e) : ble(e))}>
+    <Forms onSubmit={(e) => (typeForm ? toRegister(e) : toLogin(e))}>
       {typeForm && (
         <Label label="id-name">
           <Input

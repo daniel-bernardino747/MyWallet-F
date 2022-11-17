@@ -1,27 +1,51 @@
 import PropTypes from 'prop-types';
-import {
-  Forms, ButtonSubmit, Label, Input,
-} from './style';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/authContext';
+import { newMovement } from '../../helpers/movementHelpers';
+import * as s from './style';
 
 export default function TransactionForm({ isDeposit }) {
-  function bla() {
-    return true;
+  const [newTransaction, setNewTransaction] = useState({});
+  const { auth: { token } } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  async function sendTransaction(e) {
+    e.preventDefault();
+
+    newMovement(newTransaction, token, isDeposit)
+      .then(() => setNewTransaction({}));
+    navigate('/home');
   }
-  function ble() {
-    return false;
-  }
+
   return (
-    <Forms onSubmit={() => (isDeposit ? bla() : ble())}>
+    <s.Forms onSubmit={sendTransaction}>
 
-      <Label label="id-value">
-        <Input text="Valor" id="id-value" />
-      </Label>
-      <Label label="id-description">
-        <Input text="Descrição" id="id-description" />
-      </Label>
-
-      <ButtonSubmit value={isDeposit ? 'Salvar Entrada' : 'Salvar Saída'} />
-    </Forms>
+      <s.Label label="id-value">
+        <s.InputNumber
+          required
+          text="Valor"
+          id="id-value"
+          onChange={(e) => setNewTransaction(
+            { ...newTransaction, value: Number(e.target.value) },
+          )}
+        />
+      </s.Label>
+      <s.Label label="id-description">
+        <s.Input
+          required
+          text="Descrição"
+          id="id-description"
+          onChange={(e) => setNewTransaction(
+            { ...newTransaction, details: e.target.value },
+          )}
+        />
+      </s.Label>
+      <s.BoxButtons>
+        <s.ButtonExit value="Voltar" onClick={() => navigate(-1)} />
+        <s.ButtonSubmit value={isDeposit ? 'Salvar Entrada' : 'Salvar Saída'} />
+      </s.BoxButtons>
+    </s.Forms>
   );
 }
 

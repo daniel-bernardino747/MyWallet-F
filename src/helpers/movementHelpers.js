@@ -1,3 +1,29 @@
+import dayjs from 'dayjs';
+import { postDeposit, postWithdrawal } from '../services/POST';
+
+export async function newMovement(deposit, token, isDeposit) {
+  const { value, details } = deposit;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const dateToday = dayjs().format('DD/MM');
+
+  const body = {
+    date: dateToday,
+    value,
+    details,
+    type: 'deposit',
+  };
+  if (isDeposit) {
+    const sucess = await postDeposit(body, config);
+    return sucess;
+  }
+  const sucess = await postWithdrawal(body, config);
+  return sucess;
+}
+
 export async function balanceOfMovement(data) {
   const deposits = data
     ?.filter((m) => m.type === 'deposit')

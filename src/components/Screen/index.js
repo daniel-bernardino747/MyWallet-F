@@ -10,7 +10,8 @@ export default function Screen() {
 
   useEffect(() => {
     if (!noAccountMovement) {
-      setBalance(balanceOfMovement(accountMovements));
+      const newBalance = balanceOfMovement(accountMovements);
+      setBalance(newBalance);
     }
   }, [accountMovements]);
 

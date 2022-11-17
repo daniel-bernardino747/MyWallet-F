@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import ModelForm from '../../components/ModelForm';
-import { Title, SignUp } from '../../components/ModelForm/style';
+import AuthForm from '../../components/AuthForm';
+import { Title, SignUp } from '../../components/AuthForm/style';
 
 export default function Register() {
   return (
     <>
       <Title>MyWallet</Title>
-      <ModelForm signUp />
+      <AuthForm signUp />
 
       <Link style={{ textDecoration: 'none' }} to="/">
         <SignUp>Já tem uma conta? Entre agora!</SignUp>

@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import COLOR from '../../constants/colors';
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   width: 21em;
   gap: 0.5em;
 `;
 
-const Button = styled.div`
+export const Button = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,19 +20,15 @@ const Button = styled.div`
   background-color: ${COLOR.LIGHT_PURPLE};
 `;
 
-const Icon = styled.img`
+export const Icon = styled.img`
   width: 1.5em;
   height: 1.5em;
   margin: 0.5em;
 `;
 
-const TextAction = styled.p`
+export const TextAction = styled.p`
   width: 1em;
   margin: 0.5em;
   font-weight: 700;
   line-height: 1.3em;
 `;
-
-export {
-  Container, Button, Icon, TextAction,
-};

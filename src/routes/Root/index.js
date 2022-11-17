@@ -3,14 +3,17 @@ import ResetCSS from '../../assets/GlobalStyle';
 import {
   TransactionContextProvider as FinancialProvider,
 } from '../../contexts/TransactionContext';
+import { AuthContextProvider as AuthProvider } from '../../contexts/authContext';
 
 export default function Root() {
   return (
     <>
       <ResetCSS />
-      <FinancialProvider>
-        <Outlet />
-      </FinancialProvider>
+      <AuthProvider>
+        <FinancialProvider>
+          <Outlet />
+        </FinancialProvider>
+      </AuthProvider>
     </>
   );
 }

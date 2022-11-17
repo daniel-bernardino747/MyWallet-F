@@ -20,6 +20,9 @@
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }],
         "react/react-in-jsx-scope": "off",
         "react/forbid-prop-types": "off",
-        "react/require-default-props": "off"
+        "react/require-default-props": "off",
+        "prefer-destructuring": ["error", {"array": false}],
+        "react/jsx-no-constructed-context-values": "off",
+        "no-unused-vars": "off"
     }
 }

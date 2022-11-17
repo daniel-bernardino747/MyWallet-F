@@ -9,21 +9,17 @@ export default function FinancialServices() {
   const { isDeposit, setIsDeposit } = useContext(TransactionContext);
   const navigate = useNavigate();
 
-  function goToDeposit() {
-    setIsDeposit(true);
-    navigate('/transaction');
-  }
-  function goToWithdrawal() {
-    setIsDeposit(false);
+  function goToTransaction(type) {
+    setIsDeposit(type);
     navigate('/transaction');
   }
   return (
     <s.Container>
-      <s.Button onClick={goToDeposit}>
+      <s.Button onClick={() => goToTransaction(true)}>
         <s.Icon src={IconPlus} />
         <s.TextAction>Nova Entrada</s.TextAction>
       </s.Button>
-      <s.Button onClick={goToWithdrawal}>
+      <s.Button onClick={() => goToTransaction(false)}>
         <s.Icon src={IconMinus} />
         <s.TextAction>Nova Saída</s.TextAction>
       </s.Button>

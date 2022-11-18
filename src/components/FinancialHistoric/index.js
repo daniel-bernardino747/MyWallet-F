@@ -3,6 +3,7 @@ import * as s from './style';
 import { formatNumber, formatResult } from '../../helpers/movementHelpers';
 
 export default function FinancialHistoric({ data, balance }) {
+  const isPositive = balance > 0;
   return (
     <>
       <s.ScrollBar>
@@ -18,7 +19,7 @@ export default function FinancialHistoric({ data, balance }) {
       </s.ScrollBar>
       <s.Result>
         <s.Label>SALDO</s.Label>
-        <s.Value type={balance > 0}>{formatResult(balance)}</s.Value>
+        <s.Value type={isPositive}>{formatResult(balance)}</s.Value>
       </s.Result>
     </>
   );

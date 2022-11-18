@@ -12,12 +12,7 @@ export async function authLogin(body) {
     .then((token) => token)
     .catch(((error) => error));
 }
-export async function postDeposit(body, config) {
-  await axios.post(defaultPath, body, config)
-    .then((sucess) => sucess)
-    .catch(((error) => error));
-}
-export async function postWithdrawal(body, config) {
+export async function postTransaction(body, config) {
   await axios.post(defaultPath, body, config)
     .then((sucess) => sucess)
     .catch(((error) => error));

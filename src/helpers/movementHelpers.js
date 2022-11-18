@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { postDeposit, postWithdrawal } from '../services/POST';
+import { postTransaction } from '../services/POST';
 
 export async function newMovement(deposit, token, isDeposit) {
   const { value, details } = deposit;
@@ -10,17 +10,15 @@ export async function newMovement(deposit, token, isDeposit) {
   };
   const dateToday = dayjs().format('DD/MM');
 
+  const typeOfTransaction = isDeposit ? 'deposit' : 'withdrawal';
+
   const body = {
     date: dateToday,
     value,
     details,
-    type: 'deposit',
+    type: typeOfTransaction,
   };
-  if (isDeposit) {
-    const sucess = await postDeposit(body, config);
-    return sucess;
-  }
-  const sucess = await postWithdrawal(body, config);
+  const sucess = await postTransaction(body, config);
   return sucess;
 }
 

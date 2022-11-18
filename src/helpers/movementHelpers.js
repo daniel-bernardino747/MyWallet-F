@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import { postTransaction } from '../services/POST';
+import getMovements from '../services/GET';
 
-export async function newMovement(deposit, token, isDeposit) {
+export async function newMovement(deposit, isDeposit) {
+  const token = window.localStorage.getItem('token');
   const { value, details } = deposit;
   const config = {
     headers: {
@@ -18,22 +20,50 @@ export async function newMovement(deposit, token, isDeposit) {
     details,
     type: typeOfTransaction,
   };
-  const sucess = await postTransaction(body, config);
-  return sucess;
+  return postTransaction(body, config)
+    .then((sucess) => sucess)
+    .catch((error) => console.log(error));
 }
 
-export async function balanceOfMovement(data) {
+export async function getUsersMovements() {
+  const token = window.localStorage.getItem('token');
+  console.log('token', token);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return getMovements(config).then((answer) => answer);
+}
+
+export function balanceOfMovement(data) {
+  if (data.length === 0) return 0;
+  let balance;
+
+  console.log('data', data);
   const deposits = data
     ?.filter((m) => m.type === 'deposit')
-    ?.map((m) => m.value)
-    ?.reduce((sum, i) => sum + i);
+    ?.map((m) => m.value);
+
+  console.log('deposits', deposits);
 
   const withdrawals = data
     ?.filter((m) => m.type === 'withdrawal')
-    ?.map((m) => m.value)
-    ?.reduce((sum, i) => sum + i);
+    ?.map((m) => m.value);
+  console.log('withdrawals', withdrawals);
 
-  return (deposits - withdrawals);
+  if (deposits.length === 0 && withdrawals.length === 0) {
+    balance = 0;
+  } if (deposits.length === 0) {
+    balance = (0 - withdrawals.reduce((sum, i) => sum + i));
+  } if (withdrawals.length === 0) {
+    balance = deposits.reduce((sum, i) => sum + i);
+  } else {
+    balance = deposits.reduce((sum, i) => sum + i) - withdrawals.reduce((sum, i) => sum + i);
+  }
+
+  return balance;
 }
 
 export const formatResult = (num) => num

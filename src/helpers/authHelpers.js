@@ -1,23 +1,25 @@
-import { authRegister } from '../services/POST';
+import { authRegister, authLogin } from '../services/POST';
 
 export async function registerUser(auth) {
-  const body = { name: auth.name, email: auth.email, password: auth.password };
+  const body = {
+    name: auth.name,
+    email: auth.email,
+    password: auth.password,
+  };
 
-  try {
-    const sucess = 'sucess'; // await authRegister(body);
-    return sucess;
-  } catch (err) {
-    return err;
-  }
+  return authRegister(body)
+    .then((sucess) => sucess)
+    .catch((error) => error);
 }
 
 export async function loginUser(auth) {
-  const body = { email: auth.email, password: auth.password };
-
-  try {
-    const token = '143fde23'; // await
-    return token;
-  } catch (err) {
-    return err;
-  }
+  const body = {
+    email: auth.email,
+    password: auth.password,
+  };
+  return authLogin(body).then(async (ans) => {
+    window.localStorage.setItem('token', ans.token);
+    window.localStorage.setItem('user', ans.user);
+    return ans;
+  });
 }

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const defaultPath = '';
+const defaultPath = 'http://localhost:5000';
 
 export default async function getMovements(config) {
-  await axios.get(defaultPath, config)
-    .then((allMovements) => allMovements)
-    .catch(((error) => error));
+  return axios.get(`${defaultPath}/transactions`, config)
+    .then((answer) => answer.data.message)
+    .catch(((error) => alert(error.message)));
 }

@@ -1,19 +1,19 @@
 import axios from 'axios';
 
-const defaultPath = '';
+const defaultPath = 'http://localhost:5000';
 
 export async function authRegister(body) {
-  await axios.post(defaultPath, body)
+  return axios.post(`${defaultPath}/sign-up`, body)
     .then((sucess) => sucess)
     .catch(((error) => error));
 }
-export async function authLogin(body) {
-  await axios.post(defaultPath, body)
-    .then((token) => token)
-    .catch(((error) => error));
+export function authLogin(body) {
+  return axios.post(`${defaultPath}/sign-in`, body)
+    .then((ans) => ans.data)
+    .catch(((error) => alert(error)));
 }
 export async function postTransaction(body, config) {
-  await axios.post(defaultPath, body, config)
+  return axios.post(`${defaultPath}/transactions`, body, config)
     .then((sucess) => sucess)
-    .catch(((error) => error));
+    .catch(((error) => alert(error)));
 }

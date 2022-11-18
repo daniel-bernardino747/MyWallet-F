@@ -7,13 +7,12 @@ import * as s from './style';
 
 export default function TransactionForm({ isDeposit }) {
   const [newTransaction, setNewTransaction] = useState({});
-  const { auth: { token } } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function sendTransaction(e) {
     e.preventDefault();
 
-    newMovement(newTransaction, token, isDeposit)
+    newMovement(newTransaction, isDeposit)
       .then(() => setNewTransaction({}));
     navigate('/home');
   }

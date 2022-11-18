@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Forms, ButtonSubmit, Label, Input,
@@ -9,29 +9,38 @@ import { registerUser, loginUser } from '../../helpers/authHelpers';
 
 export default function AuthForm({ signUp, login }) {
   const { auth, setAuth } = useContext(AuthContext);
+  const [sucessLogin, setSucessLogin] = useState(false);
   const navigate = useNavigate();
 
   let typeForm;
   if (login) typeForm = false;
   if (signUp) typeForm = true;
 
-  async function toRegister(e) {
+  useEffect(() => {
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('user');
+  });
+
+  useEffect(() => {
+    if (sucessLogin) {
+      navigate('/home');
+    }
+  }, [sucessLogin]);
+
+  function toRegister(e) {
     e.preventDefault();
-    await registerUser(auth).then(() => {
+    registerUser(auth).then(() => {
       setAuth({
-        name: '', email: '', password: '', repeatPassword: '',
+        ...auth, email: '', password: '', repeatPassword: '',
       });
+      navigate('/');
     });
-    navigate('/');
   }
   function toLogin(e) {
     e.preventDefault();
-    loginUser(auth).then((token) => {
-      setAuth({
-        token, name: '', email: '', password: '', repeatPassword: '',
-      });
+    loginUser(auth).then((ans) => {
+      setSucessLogin(true);
     });
-    navigate('/home');
   }
   return (
     <Forms onSubmit={(e) => (typeForm ? toRegister(e) : toLogin(e))}>

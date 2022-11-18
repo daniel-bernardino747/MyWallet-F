@@ -1,36 +1,32 @@
-import { useContext, useEffect, useState } from 'react';
-import { balanceOfMovement } from '../../helpers/movementHelpers';
-import getMovements from '../../services/GET';
+import { useEffect, useState } from 'react';
+import { balanceOfMovement, getUsersMovements } from '../../helpers/movementHelpers';
 import FinancialHistoric from '../FinancialHistoric';
 import * as s from './style';
-import { AuthContext } from '../../contexts/authContext';
 
 export default function Screen() {
   const [balance, setBalance] = useState(0);
-  const [accountMovements, setAccountMovements] = useState([]);
-  const noAccountMovement = accountMovements.length === 0;
-  const { auth: { token } } = useContext(AuthContext);
+  const [accountMovements, setAccountMovements] = useState();
 
   useEffect(() => {
-    if (!noAccountMovement) {
+    getUsersMovements()
+      .then((movements) => {
+        setAccountMovements(movements);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (accountMovements) {
       const newBalance = balanceOfMovement(accountMovements);
       setBalance(newBalance);
+      console.log(accountMovements);
+      console.log('balance', newBalance);
     }
   }, [accountMovements]);
 
-  useEffect(async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const allMovements = await getMovements(config);
-    setAccountMovements(allMovements);
-  }, []);
-
+  console.log('accountMovements: ', accountMovements);
   return (
     <s.Container>
-      {!noAccountMovement ? (
+      {(accountMovements) ? (
         <FinancialHistoric data={accountMovements} balance={balance} />
       ) : (
         <s.Alert>

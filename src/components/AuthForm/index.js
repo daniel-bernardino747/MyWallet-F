@@ -46,12 +46,8 @@ export default function AuthForm({ signUp, login }) {
     });
   }
 
-  function notSubmitting() {
-    if (typeForm) {
-      return 'Cadastrar';
-    }
-    return 'Entrar';
-  }
+  const notSubmitting = () => (typeForm ? 'Cadastrar' : 'Entrar');
+
   return (
     <Forms onSubmit={(handleSubmit(onSubmit))}>
       {typeForm && (

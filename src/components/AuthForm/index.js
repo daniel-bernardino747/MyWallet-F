@@ -19,6 +19,9 @@ export default function AuthForm({ signUp, login }) {
   useEffect(() => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('user');
+    setAuth({
+      ...auth, name: '', email: '', password: '', repeatPassword: '',
+    });
   }, []);
 
   useEffect(() => {
@@ -29,16 +32,30 @@ export default function AuthForm({ signUp, login }) {
 
   function toRegister(e) {
     e.preventDefault();
-    registerUser(auth).then(() => {
-      setAuth({
-        ...auth, email: '', password: '', repeatPassword: '',
-      });
-      navigate('/');
+    const differentPasswords = auth.password !== auth.repeatPassword;
+
+    if (differentPasswords) {
+      alert('Passwords must be the same');
+      setAuth({ ...auth, password: '', repeatPassword: '' });
+      return;
+    }
+    registerUser(auth).then((answer) => {
+      if (answer) {
+        setAuth({
+          ...auth, email: '', password: '', repeatPassword: '',
+        });
+        navigate('/');
+      }
     });
   }
   function toLogin(e) {
     e.preventDefault();
-    loginUser(auth).then(() => setSucessLogin(true));
+    loginUser(auth).then((answer) => {
+      if (answer) {
+        return setSucessLogin(true);
+      }
+      return setAuth({ ...auth, password: '' });
+    });
   }
   return (
     <Forms onSubmit={(e) => (typeForm ? toRegister(e) : toLogin(e))}>
@@ -46,7 +63,9 @@ export default function AuthForm({ signUp, login }) {
         <Label label="id-name">
           <Input
             required
-            text="Nome"
+            value={auth.name}
+            type="text"
+            detail="Nome"
             id="id-name"
             onChange={(e) => setAuth({ ...auth, name: e.target.value })}
           />
@@ -56,18 +75,24 @@ export default function AuthForm({ signUp, login }) {
       <Label label="id-email">
         <Input
           required
-          text="E-mail"
+          value={auth.email}
+          type="text"
+          detail="E-mail"
           id="id-email"
           onChange={(e) => setAuth({ ...auth, email: e.target.value })}
+          disabled={sucessLogin}
         />
       </Label>
 
       <Label label="id-password">
         <Input
           required
-          text="Senha"
+          value={auth.password}
+          type="password"
+          detail="Senha"
           id="id-password"
           onChange={(e) => setAuth({ ...auth, password: e.target.value })}
+          disabled={sucessLogin}
         />
       </Label>
 
@@ -75,7 +100,9 @@ export default function AuthForm({ signUp, login }) {
         <Label label="id-repeat-password">
           <Input
             required
-            text="Confirme a senha"
+            value={auth.repeatPassword}
+            type="password"
+            detail="Confirme a senha"
             id="id-repeat-password"
             onChange={(e) => setAuth(
               { ...auth, repeatPassword: e.target.value },
@@ -83,7 +110,10 @@ export default function AuthForm({ signUp, login }) {
           />
         </Label>
       )}
-      <ButtonSubmit value={typeForm ? 'Cadastrar' : 'Entrar'} />
+      <ButtonSubmit
+        value={typeForm ? 'Cadastrar' : 'Entrar'}
+        disabled={sucessLogin}
+      />
     </Forms>
   );
 }

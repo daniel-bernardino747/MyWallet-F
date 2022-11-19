@@ -8,8 +8,7 @@ export async function registerUser(auth) {
   };
 
   return authRegister(body)
-    .then((sucess) => sucess)
-    .catch((error) => error);
+    .then((answer) => answer);
 }
 
 export async function loginUser(auth) {
@@ -18,10 +17,9 @@ export async function loginUser(auth) {
     password: auth.password,
   };
 
-  return authLogin(body).then((ans) => {
-    console.log(ans);
-    window.localStorage.setItem('token', ans.token);
-    window.localStorage.setItem('user', ans.user);
-    return ans;
+  return authLogin(body).then((answer) => {
+    window.localStorage.setItem('token', answer.token);
+    window.localStorage.setItem('user', answer.user);
+    return answer;
   });
 }

@@ -23,6 +23,11 @@
         "react/require-default-props": "off",
         "prefer-destructuring": ["error", {"array": false}],
         "react/jsx-no-constructed-context-values": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "react/jsx-props-no-spreading": ["error", {
+            "html": "enforce",
+            "custom": "ignore",
+            "explicitSpread": "enforce"
+        }]
     }
 }

@@ -1,118 +1,119 @@
 import PropTypes from 'prop-types';
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { isEmail } from 'validator';
 import {
   Forms, ButtonSubmit, Label, Input,
 } from './style';
-import { AuthContext } from '../../contexts/authContext';
 import { registerUser, loginUser } from '../../helpers/authHelpers';
 
 export default function AuthForm({ signUp, login }) {
-  const { auth, setAuth } = useContext(AuthContext);
-  const [sucessLogin, setSucessLogin] = useState(false);
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState,
+  } = useForm();
+  const { isSubmitting, errors } = formState;
+  let watchPassword;
+  let typeForm = false;
 
-  let typeForm;
   if (login) typeForm = false;
   if (signUp) typeForm = true;
+  if (typeForm) watchPassword = watch('password');
 
   useEffect(() => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('user');
-    setAuth({
-      ...auth, name: '', email: '', password: '', repeatPassword: '',
-    });
   }, []);
 
-  useEffect(() => {
-    if (sucessLogin) {
-      setTimeout(() => (navigate('/')), 5000);
-    }
-  });
+  function onSubmit(data) {
+    return new Promise(() => {
+      if (typeForm) {
+        const differentPasswords = data.password !== data.passwordConfirmation;
+        if (differentPasswords) alert('Passwords must be the same');
 
-  function toRegister(e) {
-    e.preventDefault();
-    const differentPasswords = auth.password !== auth.repeatPassword;
-
-    if (differentPasswords) {
-      alert('Passwords must be the same');
-      setAuth({ ...auth, password: '', repeatPassword: '' });
-      return;
-    }
-    registerUser(auth).then((answer) => {
-      if (answer) {
-        setAuth({
-          ...auth, email: '', password: '', repeatPassword: '',
+        registerUser(data).then((sucess) => {
+          if (sucess) navigate('/');
         });
-        navigate('/');
+      } else {
+        loginUser(data).then((sucess) => {
+          if (sucess) setTimeout(() => (navigate('/')), 3000);
+        });
       }
     });
   }
-  function toLogin(e) {
-    e.preventDefault();
-    loginUser(auth).then((answer) => {
-      if (answer) {
-        return setSucessLogin(true);
-      }
-      return setAuth({ ...auth, password: '' });
-    });
+
+  function notSubmitting() {
+    if (typeForm) {
+      return 'Cadastrar';
+    }
+    return 'Entrar';
   }
   return (
-    <Forms onSubmit={(e) => (typeForm ? toRegister(e) : toLogin(e))}>
+    <Forms onSubmit={(handleSubmit(onSubmit))}>
       {typeForm && (
         <Label label="id-name">
           <Input
-            required
-            value={auth.name}
+            error={errors?.name}
             type="text"
             detail="Nome"
-            id="id-name"
-            onChange={(e) => setAuth({ ...auth, name: e.target.value })}
+            {...register('name', { required: true })}
           />
+          {errors?.name?.type === 'required' && (
+          <p>Name is required.</p>
+          )}
         </Label>
       )}
 
       <Label label="id-email">
         <Input
-          required
-          value={auth.email}
           type="text"
           detail="E-mail"
-          id="id-email"
-          onChange={(e) => setAuth({ ...auth, email: e.target.value })}
-          disabled={sucessLogin}
+          {...register('email', { required: true, validate: (value) => isEmail(value) })}
         />
+        {errors?.email?.type === 'required' && (
+          <p>Email is required.</p>
+        )}
+        {errors?.email?.type === 'validate' && (
+          <p>Email is invalid.</p>
+        )}
       </Label>
 
       <Label label="id-password">
         <Input
-          required
-          value={auth.password}
           type="password"
           detail="Senha"
-          id="id-password"
-          onChange={(e) => setAuth({ ...auth, password: e.target.value })}
-          disabled={sucessLogin}
+          {...register('password', { required: true, minLength: 3 })}
         />
+        {errors?.password?.type === 'required' && (
+          <p>Password is required.</p>
+        )}
+        {errors?.password?.type === 'minLength' && (
+          <p>Password needs to have at least 3 characters.</p>
+        )}
       </Label>
 
       {typeForm && (
         <Label label="id-repeat-password">
           <Input
-            required
-            value={auth.repeatPassword}
             type="password"
             detail="Confirme a senha"
-            id="id-repeat-password"
-            onChange={(e) => setAuth(
-              { ...auth, repeatPassword: e.target.value },
-            )}
+            {...register('passwordConfirmation', { required: true, validate: (value) => value === watchPassword })}
           />
+          {errors?.passwordConfirmation?.type === 'required' && (
+          <p>Password needs to have at least 5 characters.</p>
+          )}
+          {errors?.passwordConfirmation?.type === 'validate' && (
+          <p>Passwords does not match.</p>
+          )}
         </Label>
       )}
       <ButtonSubmit
-        value={typeForm ? 'Cadastrar' : 'Entrar'}
-        disabled={sucessLogin}
+        disabled={isSubmitting}
+        value={isSubmitting ? 'Carregando...' : notSubmitting()}
       />
     </Forms>
   );

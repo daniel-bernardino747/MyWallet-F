@@ -35,6 +35,13 @@ const Title = styled.h1`
 
 const Label = styled.label`
   display: flex;
+  flex-direction: column;
+  width: 17.5em;
+  p {
+    margin-bottom: 1em;
+    font-weight: 700;
+    color: ${COLOR.WHITE};
+  }
 `;
 
 const SignUp = styled.p`
@@ -51,7 +58,7 @@ const Input = styled.input.attrs((props) => ({
   width: 21em;
   height: 3.5em;
   padding: 0 0.5em;
-  border: none;
+  border: ${(props) => (props.error ? '0.0625em solid red;' : 'none;')};
   border-radius: 0.3em;
   color: #000;
 

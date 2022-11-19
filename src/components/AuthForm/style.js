@@ -5,6 +5,9 @@ const Forms = styled.form`
   input {
     margin-bottom: 0.7em;
   }
+  display: flex;
+  flex-direction: column;
+  place-items: center;
 `;
 
 const ButtonSubmit = styled.input.attrs({ type: 'submit' })`
@@ -15,6 +18,11 @@ const ButtonSubmit = styled.input.attrs({ type: 'submit' })`
   color: ${COLOR.WHITE};
   font-weight: 700;
   background-color: ${COLOR.LIGHT_PURPLE};
+  cursor: pointer;
+  &&:hover {
+    width: 20em;
+    background-color: ${COLOR.PINK};
+  }
 `;
 
 const Title = styled.h1`
@@ -38,8 +46,7 @@ const SignUp = styled.p`
 `;
 
 const Input = styled.input.attrs((props) => ({
-  type: 'text',
-  placeholder: props.text,
+  placeholder: props.detail,
 }))`
   width: 21em;
   height: 3.5em;

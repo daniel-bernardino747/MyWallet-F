@@ -18,6 +18,10 @@ export const Button = styled.div`
   border-radius: 0.3em;
   color: ${COLOR.WHITE};
   background-color: ${COLOR.LIGHT_PURPLE};
+  &&:hover {
+    background-color: ${COLOR.PINK};
+    width: 12em;
+  }
 `;
 
 export const Icon = styled.img`

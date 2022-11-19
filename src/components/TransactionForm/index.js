@@ -14,7 +14,7 @@ export default function TransactionForm({ isDeposit }) {
 
     newMovement(newTransaction, isDeposit)
       .then(() => setNewTransaction({}));
-    navigate('/home');
+    navigate('/');
   }
 
   return (

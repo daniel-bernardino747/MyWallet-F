@@ -25,6 +25,7 @@ export default function TransactionForm({ isDeposit }) {
           required
           text="Valor"
           id="id-value"
+          step="any"
           onChange={(e) => setNewTransaction(
             { ...newTransaction, value: Number(e.target.value) },
           )}

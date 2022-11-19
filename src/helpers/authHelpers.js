@@ -17,7 +17,9 @@ export async function loginUser(auth) {
     email: auth.email,
     password: auth.password,
   };
-  return authLogin(body).then(async (ans) => {
+
+  return authLogin(body).then((ans) => {
+    console.log(ans);
     window.localStorage.setItem('token', ans.token);
     window.localStorage.setItem('user', ans.user);
     return ans;

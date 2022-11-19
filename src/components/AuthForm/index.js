@@ -19,13 +19,13 @@ export default function AuthForm({ signUp, login }) {
   useEffect(() => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('user');
-  });
+  }, []);
 
   useEffect(() => {
     if (sucessLogin) {
-      navigate('/home');
+      setTimeout(() => (navigate('/')), 5000);
     }
-  }, [sucessLogin]);
+  });
 
   function toRegister(e) {
     e.preventDefault();
@@ -38,9 +38,7 @@ export default function AuthForm({ signUp, login }) {
   }
   function toLogin(e) {
     e.preventDefault();
-    loginUser(auth).then((ans) => {
-      setSucessLogin(true);
-    });
+    loginUser(auth).then(() => setSucessLogin(true));
   }
   return (
     <Forms onSubmit={(e) => (typeForm ? toRegister(e) : toLogin(e))}>

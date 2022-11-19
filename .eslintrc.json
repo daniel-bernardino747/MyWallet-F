@@ -24,6 +24,7 @@
         "prefer-destructuring": ["error", {"array": false}],
         "react/jsx-no-constructed-context-values": "off",
         "no-unused-vars": "off",
+        "no-alert": "off",
         "react/jsx-props-no-spreading": ["error", {
             "html": "enforce",
             "custom": "ignore",

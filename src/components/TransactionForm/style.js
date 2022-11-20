@@ -42,6 +42,13 @@ export const ButtonExit = styled.input.attrs({ type: 'button' })`
 
 export const Label = styled.label`
   display: flex;
+  flex-direction: column;
+  width: 17.5em;
+  p {
+    margin-bottom: 1em;
+    font-weight: 700;
+    color: ${COLOR.WHITE};
+  }
 `;
 
 export const Input = styled.input.attrs((props) => ({
@@ -51,7 +58,7 @@ export const Input = styled.input.attrs((props) => ({
   width: 21em;
   height: 3.5em;
   padding: 0 0.5em;
-  border: none;
+  border: ${(props) => (props.error ? '0.0625em solid red;' : 'none;')};
   border-radius: 0.3em;
   color: #000;
 
@@ -66,7 +73,7 @@ export const InputNumber = styled.input.attrs((props) => ({
   width: 21em;
   height: 3.5em;
   padding: 0 0.5em;
-  border: none;
+  border: ${(props) => (props.error ? '0.0625em solid red;' : 'none;')};
   border-radius: 0.3em;
   color: #000;
 

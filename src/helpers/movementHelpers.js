@@ -3,9 +3,9 @@ import { postTransaction } from '../services/POST';
 import getMovements from '../services/GET';
 import deleteTransactionById from '../services/DELETE';
 
-export async function newMovement(deposit, isDeposit) {
+export async function newMovement(data, isDeposit) {
   const token = window.localStorage.getItem('token');
-  const { value, details } = deposit;
+  const { value, description: details } = data;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -17,7 +17,7 @@ export async function newMovement(deposit, isDeposit) {
 
   const body = {
     date: dateToday,
-    value,
+    value: Number(value),
     details,
     type: typeOfTransaction,
   };

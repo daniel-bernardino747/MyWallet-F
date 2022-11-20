@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/authContext';
 import { newMovement } from '../../helpers/movementHelpers';
 import * as s from './style';
 

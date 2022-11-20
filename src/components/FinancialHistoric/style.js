@@ -39,3 +39,17 @@ export const Result = styled.div`
 export const Label = styled.p`
   font-weight: 700;
 `;
+export const Box = styled.div`
+  display: flex;
+  gap: 0.5em;
+`;
+export const DeleteButton = styled.div`
+  color: ${COLOR.LIGHT_GREY};
+  background-color: none;
+  border: none;
+  cursor: pointer;
+
+  &&:hover {
+    color: red;
+  }
+`;

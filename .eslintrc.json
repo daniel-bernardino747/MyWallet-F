@@ -29,6 +29,7 @@
             "html": "enforce",
             "custom": "ignore",
             "explicitSpread": "enforce"
-        }]
+        }],
+        "no-underscore-dangle": ["error", {"allow": ["_id"]}]
     }
 }

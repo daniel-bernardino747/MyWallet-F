@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { postTransaction } from '../services/POST';
 import getMovements from '../services/GET';
+import deleteTransactionById from '../services/DELETE';
 
 export async function newMovement(deposit, isDeposit) {
   const token = window.localStorage.getItem('token');
@@ -27,7 +28,6 @@ export async function newMovement(deposit, isDeposit) {
 
 export async function getUsersMovements() {
   const token = window.localStorage.getItem('token');
-  console.log('token', token);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -35,6 +35,16 @@ export async function getUsersMovements() {
   };
 
   return getMovements(config).then((answer) => answer);
+}
+export async function deleteTransaction(id) {
+  const token = window.localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return deleteTransactionById(id, config).then((answer) => answer);
 }
 
 export function balanceOfMovement(data) {

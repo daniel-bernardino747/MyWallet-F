@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { balanceOfMovement, getUsersMovements } from '../../helpers/movementHelpers';
+import { getUsersMovements } from '../../helpers/movementHelpers';
 import FinancialHistoric from '../FinancialHistoric';
 import * as s from './style';
 
@@ -11,20 +11,11 @@ export default function Screen() {
   useEffect(() => {
     getUsersMovements()
       .then((movements) => {
-        setAccountMovements(movements);
+        setAccountMovements(movements.data);
+        setBalance(movements.balance);
       });
   }, [historic]);
 
-  useEffect(() => {
-    if (accountMovements) {
-      const newBalance = balanceOfMovement(accountMovements);
-      setBalance(newBalance);
-      console.log(accountMovements);
-      console.log('balance', newBalance);
-    }
-  }, [accountMovements]);
-
-  console.log('accountMovements: ', accountMovements);
   return (
     <s.Container>
       {(accountMovements) ? (

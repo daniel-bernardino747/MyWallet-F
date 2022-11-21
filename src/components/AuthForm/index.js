@@ -44,7 +44,7 @@ export default function AuthForm({ signUp, login }) {
         });
       } else {
         loginUser(data).then((sucess) => {
-          if (sucess) setTimeout(() => (navigate('/')), 3000);
+          if (sucess) navigate('/');
         });
       }
     });

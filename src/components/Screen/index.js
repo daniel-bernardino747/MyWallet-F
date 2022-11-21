@@ -18,7 +18,7 @@ export default function Screen() {
 
   return (
     <s.Container>
-      {(accountMovements.length > 0) ? (
+      {(accountMovements?.length > 0) ? (
         <FinancialHistoric
           data={accountMovements}
           balance={balance}

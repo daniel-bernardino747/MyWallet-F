@@ -6,7 +6,7 @@ import * as s from './style';
 import { TransactionContext } from '../../contexts/TransactionContext';
 
 export default function FinancialServices() {
-  const { isDeposit, setIsDeposit } = useContext(TransactionContext);
+  const { setIsDeposit } = useContext(TransactionContext);
   const navigate = useNavigate();
 
   function goToTransaction(type) {

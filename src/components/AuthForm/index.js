@@ -17,15 +17,18 @@ export default function AuthForm({ signUp, login }) {
   } = useForm();
   const { isSubmitting, errors } = formState;
   let typeForm = false;
-  let watchPassword;
 
   if (login) typeForm = false;
   if (signUp) typeForm = true;
-  if (typeForm) watchPassword = watch('password');
 
-  const notSubmitting = () => (typeForm ? 'Cadastrar' : 'Entrar');
+  const watchPassword = typeForm
+    ? watch('password')
+    : '';
 
-  if (window.localStorage.getItem('token')) {
+  const notSubmitting = typeForm ? 'Cadastrar' : 'Entrar';
+  const existingTokenInLocalStorage = !!window.localStorage.getItem('token');
+
+  if (existingTokenInLocalStorage) {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('user');
   }
@@ -111,7 +114,7 @@ export default function AuthForm({ signUp, login }) {
       )}
       <s.ButtonSubmit
         disabled={isSubmitting}
-        value={isSubmitting ? 'Carregando...' : notSubmitting()}
+        value={isSubmitting ? 'Carregando...' : notSubmitting}
       />
     </s.Forms>
   );

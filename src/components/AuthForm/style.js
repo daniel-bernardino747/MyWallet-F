@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import COLOR from '../../constants/colors';
 
 const Forms = styled.form`
-  input {
-    margin-bottom: 0.7em;
-  }
   display: flex;
   flex-direction: column;
   place-items: center;
+  input {
+    margin-bottom: 0.7em;
+  }
 `;
 
 const ButtonSubmit = styled.input.attrs({ type: 'submit' })`
@@ -17,8 +17,8 @@ const ButtonSubmit = styled.input.attrs({ type: 'submit' })`
   border-radius: 0.3em;
   color: ${COLOR.WHITE};
   font-weight: 700;
-  background-color: ${COLOR.LIGHT_PURPLE};
   cursor: pointer;
+  background-color: ${COLOR.LIGHT_PURPLE};
   &&:hover {
     width: 20em;
     background-color: ${COLOR.PINK};
@@ -39,8 +39,8 @@ const Label = styled.label`
   width: 17.5em;
   p {
     margin-bottom: 1em;
-    font-weight: 700;
     color: ${COLOR.WHITE};
+    font-weight: 700;
   }
 `;
 

@@ -44,11 +44,10 @@ export const Box = styled.div`
   gap: 0.5em;
 `;
 export const DeleteButton = styled.div`
-  color: ${COLOR.LIGHT_GREY};
-  background-color: none;
   border: none;
+  color: ${COLOR.LIGHT_GREY};
   cursor: pointer;
-
+  background-color: none;
   &&:hover {
     color: red;
   }

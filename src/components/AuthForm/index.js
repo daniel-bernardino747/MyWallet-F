@@ -48,10 +48,8 @@ export default function AuthForm({ signUp, login }) {
       } else {
         loginUser(data).then((sucess) => {
           if (sucess) {
-            console.log(sucess);
             navigate('/');
           }
-          console.log('aqui');
           resolve();
         });
       }

@@ -19,8 +19,8 @@ export const Button = styled.div`
   color: ${COLOR.WHITE};
   background-color: ${COLOR.LIGHT_PURPLE};
   &&:hover {
-    background-color: ${COLOR.PINK};
     width: 12em;
+    background-color: ${COLOR.PINK};
   }
 `;
 

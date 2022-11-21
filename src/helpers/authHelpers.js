@@ -18,8 +18,10 @@ export async function loginUser(auth) {
   };
 
   return authLogin(body).then((answer) => {
-    window.localStorage.setItem('token', answer.token);
-    window.localStorage.setItem('user', answer.user.name);
+    if (answer) {
+      window.localStorage.setItem('token', answer.token);
+      window.localStorage.setItem('user', answer.user.name);
+    }
     return answer;
   });
 }

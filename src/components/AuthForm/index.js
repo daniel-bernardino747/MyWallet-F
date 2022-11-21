@@ -34,17 +34,25 @@ export default function AuthForm({ signUp, login }) {
   }
 
   function onSubmit(data) {
-    return new Promise(() => {
+    return new Promise((resolve) => {
       if (typeForm) {
         const differentPasswords = data.password !== data.passwordConfirmation;
         if (differentPasswords) alert('Passwords must be the same');
 
         registerUser(data).then((sucess) => {
-          if (sucess) navigate('/');
+          if (sucess) {
+            navigate('/login');
+          }
+          resolve();
         });
       } else {
         loginUser(data).then((sucess) => {
-          if (sucess) navigate('/');
+          if (sucess) {
+            console.log(sucess);
+            navigate('/');
+          }
+          console.log('aqui');
+          resolve();
         });
       }
     });

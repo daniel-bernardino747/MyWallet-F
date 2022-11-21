@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const defaultPath = 'http://localhost:5000';
+import defaultPath from '../constants/defaultpath';
 
 export async function authRegister(body) {
   return axios.post(`${defaultPath}/sign-up`, body)

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const defaultPath = 'http://localhost:5000';
+import defaultPath from '../constants/defaultpath';
 
 export default async function getMovements(config) {
   return axios.get(`${defaultPath}/transactions`, config)

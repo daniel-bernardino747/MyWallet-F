@@ -5,7 +5,7 @@ import { deleteTransaction, formatNumber, formatResult } from '../../helpers/mov
 export default function FinancialHistoric({
   data, balance, setHistoric, historic,
 }) {
-  const isPositive = balance > 0;
+  const balancePositive = balance > 0;
 
   const deleteTransactionAndUpdate = async (id) => {
     if (window.confirm('Confirme a remoção dessa transação.')) {
@@ -33,7 +33,7 @@ export default function FinancialHistoric({
       </s.ScrollBar>
       <s.Result>
         <s.Label>SALDO</s.Label>
-        <s.Value type={isPositive}>{formatResult(balance)}</s.Value>
+        <s.Value type={balancePositive}>{formatResult(balance)}</s.Value>
       </s.Result>
     </>
   );
